@@ -1,18 +1,12 @@
-
-class dot:
-
-    def __init__(self):
-        self.x = 0
-        self.y = 0
-
-    def incX(self):
-        self.x += 1
-
-    def incY(self):
-        self.y += 1
-
-# Example file showing a circle moving on screen
 import pygame
+
+class Dot:
+
+    def __init__(self, player_pos_vec, mass):
+        self.vec = player_pos_vec
+        self.mass = mass
+
+
 
 # pygame setup
 pygame.init()
@@ -33,12 +27,24 @@ while running:
 
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("black")
+
     pygame.draw.circle(screen, "white", player_pos, 1)
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_w]:
+        player_pos.y -= 300 * dt
+    if keys[pygame.K_s]:
+        player_pos.y += 300 * dt
+    if keys[pygame.K_a]:
+        player_pos.x -= 300 * dt
+    if keys[pygame.K_d]:
+        player_pos.x += 300 * dt
+
     left, middle, right = pygame.mouse.get_pressed()
 
     if left:
-        player_pos = pygame.mouse.get_pos()
-        print(player_pos)
+        player_pos.xy = pygame.mouse.get_pos()
+
 
 
     # flip() the display to put your work on screen
