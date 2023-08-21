@@ -1,11 +1,11 @@
 import pygame
 
+
 class Dot:
 
     def __init__(self, player_pos_vec, mass):
         self.vec = player_pos_vec
         self.mass = mass
-
 
 
 # pygame setup
@@ -18,16 +18,8 @@ dt = 0
 player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 pygame.mouse.set_cursor(*pygame.cursors.arrow)
 
-while running:
-    # poll for events
-    # pygame.QUIT event means the user clicked X to close your window
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
 
-    # fill the screen with a color to wipe away anything from last frame
-    screen.fill("black")
-
+def move_dot():
     pygame.draw.circle(screen, "white", player_pos, 1)
 
     keys = pygame.key.get_pressed()
@@ -46,13 +38,17 @@ while running:
         player_pos.xy = pygame.mouse.get_pos()
 
 
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
 
-    # flip() the display to put your work on screen
+    screen.fill("black")
+
+    move_dot()
+
+    # important shit to run
     pygame.display.flip()
-
-    # limits FPS to 60
-    # dt is delta time in seconds since last frame, used for framerate-
-    # independent physics.
     dt = clock.tick(60) / 1000
 
 pygame.quit()
