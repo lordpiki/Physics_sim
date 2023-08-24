@@ -64,6 +64,10 @@ double Point::updateVelocity()
 {
     // adding acceleration to velocity
     velocity = velocity + acceleration * timeFrame;
+    if (velocity > 1000)
+    {
+        velocity = 1000;
+    }
     return velocity;
 }
 
@@ -75,6 +79,11 @@ void Point::updatePosition(const vector<Point>& allPoints)
     // moving pos
     position.first += velocity * timeFrame * std::cos(direction);
     position.second += velocity * timeFrame * std::sin(direction);
+}
+
+double Point::getDistance(const Point& otherPoint)
+{
+    return std::hypot(otherPoint.position.first - position.first, otherPoint.position.second - position.second);;
 }
 
 pair<double, double> Point::calcNetForce(const vector<Point>& allPoints)
@@ -110,7 +119,6 @@ double Point::calcGravitationalForce(const Point& otherPoint) const
 {
     // calculate distance between 2 points
     double distance = std::hypot(otherPoint.position.first - position.first, otherPoint.position.second - position.second);
-
     // Calculate the gravitational force using the gravity formula
     double force = (G * mass * otherPoint.mass) / (distance * distance);
 

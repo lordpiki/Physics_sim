@@ -1,11 +1,15 @@
 #include "Communicator.h"
 #include <iostream>
 #pragma comment(lib, "ws2_32.lib")
+#include "JSON/json.hpp"
 
 
+using json = nlohmann::json;
 
 using std::cout;
 using std::endl;
+using std::string;
+
 #define PORT 8876
 
 Communicator::Communicator(int port) 
@@ -48,6 +52,16 @@ string Communicator::recieveMsg()
 		buffer[bytesRead] = '\0';
 		return string(buffer);
 	}
+}
+
+string Communicator::getEnviromentJson(const Enviroment& enviroment)
+{
+	json jsonPoints;
+	for (const Point& point : enviroment.getPoints())
+	{
+		jsonPoints.push_back({ {"x", point.getPosition().first}, {"y", point.getPosition().second} });
+	}
+	return jsonPoints.dump();
 }
 
 int Communicator::bindAndListen()

@@ -3,11 +3,11 @@
 #include <WinSock2.h>
 #include <map>
 #include <vector>
-#include <condition_variable>
-#include <mutex>
-
-
+#include "Enviroment.h"
 #include <Windows.h>
+#include "JSON/json.hpp"
+#include <string>
+
 
 using std::string;
 
@@ -19,6 +19,8 @@ public:
 
     void sendMsg(const string& message);
     string recieveMsg();
+
+    string getEnviromentJson(const Enviroment& enviroment);
 
 
 private:

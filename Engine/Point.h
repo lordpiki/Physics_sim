@@ -6,6 +6,7 @@
 #include <cmath>
 
 
+
 #define G 6.67430e-11
 
 using std::pair;
@@ -14,7 +15,7 @@ using std::vector;
 class Point {
 public:
     // Constructor with default values
-    Point(double x = 0.0, double y = 0.0, double velocity = 0.0, double acceleration = 0.0, double mass = 0.0, double timeFrame = 10)
+    Point(double x = 0.0, double y = 0.0, double velocity = 0.0, double acceleration = 0.0, double mass = std::pow(10, 6), double timeFrame = 50)
         : position(std::make_pair(x, y)), velocity(velocity), acceleration(acceleration), mass(mass), timeFrame(timeFrame) {}
 
     // Getter and setter for position 
@@ -37,6 +38,8 @@ public:
     double updateVelocity();
     void updatePosition(const vector<Point>& allPoints);
 
+    double getDistance(const Point& otherPoint);
+
 
 
 
@@ -54,4 +57,7 @@ private:
     // function to calculate gravitational net force for all points (x,y directions)
     // returns x, y
     pair<double, double> calcNetForce(const vector<Point>& allPoints);
+
+
 };
+
