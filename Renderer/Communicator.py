@@ -1,5 +1,6 @@
 import socket
 import json
+from Point import Point
 
 class Communicator:
     def __init__(self, server_ip, server_port):
@@ -25,6 +26,6 @@ class Communicator:
     
     def convertJsonToList(self, jsonStr):
         points = json.loads(jsonStr)
-        list_of_points = [(int(point['x']), int(point['y'])) for point in points]
+        list_of_points = [Point(point['x'], point['y'], point['velocity'], point['acceleration'], point['mass'], point['radius']) for point in points]
         return list_of_points        
 

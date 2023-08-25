@@ -29,10 +29,10 @@ int main()
         if (frame > 3500)
         {
             env.reset();
-            env.addPoint(Point({ dist(gen), dist(gen) }, {0.003, 0.00}, {0, 0}, std::pow(10, 6), 2));
-            env.addPoint(Point({ dist(gen), dist(gen) }, { 0.00, 0.00 }, { 0, 0 }, std::pow(10, 8), 4));
-            env.addPoint(Point({ dist(gen), dist(gen) }, { 0.002, -0.001 }, { 0, 0 }, std::pow(10, 7), 3));
-            env.addPoint(Point({ dist(gen), dist(gen) }, { 0.002, -0.002 }, { 0, 0 }, std::pow(10, 4), 1));
+            env.addPoint(Point({ dist(gen), dist(gen) }, {0.003, 0.00}, {0, 0}, std::pow(10, 6)));
+            env.addPoint(Point({ dist(gen), dist(gen) }, { 0.00, 0.00 }, { 0, 0 }, std::pow(10, 8)));
+            env.addPoint(Point({ dist(gen), dist(gen) }, { 0.002, -0.001 }, { 0, 0 }, std::pow(10, 7)));
+            env.addPoint(Point({ dist(gen), dist(gen) }, { 0.002, -0.002 }, { 0, 0 }, std::pow(10, 4)));
             frame = 0;
         }
         env.upatePoints();

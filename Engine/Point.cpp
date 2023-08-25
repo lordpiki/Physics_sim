@@ -1,8 +1,8 @@
 #include "Point.h"
 #include <cmath>
 
-Point::Point(pair<double, double> position, pair<double, double> velocity, pair<double, double> acceleration, double mass, double timeFrame, int radius)
-    : position(position), velocity(velocity), acceleration(acceleration), mass(mass), timeFrame(timeFrame), radius(radius) {}
+Point::Point(pair<double, double> position, pair<double, double> velocity, pair<double, double> acceleration, double mass, double timeFrame)
+    : position(position), velocity(velocity), acceleration(acceleration), mass(mass), timeFrame(timeFrame), radius(std::log10(mass)) {}
 
 pair<double, double> Point::getPosition() const
 {
