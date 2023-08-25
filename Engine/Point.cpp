@@ -1,7 +1,7 @@
 #include "Point.h"
 #include <cmath>
 
-Point::Point(pair<double, double> position, pair<double, double> velocity, pair<double, double> acceleration, double mass, double timeFrame)
+Point::Point(pair<double, double> position, pair<double, double> velocity, double mass, pair<double, double> acceleration, double timeFrame)
     : position(position), velocity(velocity), acceleration(acceleration), mass(mass), timeFrame(timeFrame), radius(std::log10(mass)) {}
 
 pair<double, double> Point::getPosition() const
@@ -14,7 +14,7 @@ void Point::setPosition(double newX, double newY)
     position = std::make_pair(newX, newY);
 }
 
-pair<double, double> Point::getvelocity() const
+pair<double, double> Point::getVelocity() const
 {
     return velocity;
 }
@@ -29,9 +29,9 @@ pair<double, double> Point::getAcceleration() const
     return acceleration;
 }
 
-void Point::setAcceleration(pair<double, double> newAcceleration)
+void Point::setAcceleration(pair<double, double> newAccceleration)
 {
-    acceleration = newAcceleration;
+    acceleration = newAccceleration;
 }
 
 double Point::getMass() const
@@ -67,8 +67,8 @@ pair<double, double> Point::updateAcceleration(const vector<Point>& allPoints)
 pair<double, double> Point::updateVelocity()
 {
     // adding acceleration to velocity
-    velocity.first = velocity.first + acceleration.first * timeFrame;
-    velocity.second = velocity.second + acceleration.second * timeFrame;
+    velocity.first += acceleration.first * timeFrame;
+    velocity.second += acceleration.second * timeFrame;
     
     // setting the max velocity to 1000 m/s
     if (velocity.first > 1000) { velocity.first = 1000; }
@@ -119,6 +119,11 @@ int Point::getRadius() const
     return radius;
 }
 
+void Point::setRadius(int newRadius)
+{
+    radius = newRadius;
+}
+
 pair<double, double> Point::calcNetForce(const vector<Point>& allPoints)
 {
     // x and y net force directions (can be later merged)
@@ -136,8 +141,8 @@ pair<double, double> Point::calcNetForce(const vector<Point>& allPoints)
             double angle = std::atan2(deltaY, deltaX);
 
             // Calculate components of force along X and Y axes
-            double forceX = currForce * std::cos(angle);
-            double forceY = currForce * std::sin(angle);
+            double forceX = currForce * std::round(std::cos(angle));
+            double forceY = currForce * std::round(std::sin(angle));
 
             // adding forces to x and y directions
             netForce.first += forceX;

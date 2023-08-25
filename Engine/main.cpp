@@ -15,26 +15,32 @@ int main()
 {
     std::random_device rd;  // Seed the random number generator
     std::mt19937 gen(rd()); // Mersenne Twister engine
-    std::uniform_int_distribution<int> dist(300, 800); // Range 1-90
+    std::uniform_int_distribution<int> dist(300, 600); // Range 1-90
 
     const int PORT = 8876;
     int frame = 1000000;
     Enviroment env;
 
     Communicator communicator(PORT);
+    double mass = std::pow(10, 8);
 
     cout << communicator.getEnviromentJson(env);
+    for (double i = 1; i < 50; i++)
+    {
+        double newMass = mass * i;
+        double newAcc = 0;
+        double newVel = 0.01;
+        env.addPoint(Point({ 0, i * 8 }, { newVel , 0 }, newMass, { newAcc, 0 }));
+        env.addPoint(Point({ 50, i * 8}, { newVel, 0 }, newMass, { newAcc, 0 }));
+        env.addPoint(Point({ 100, i * 8}, { newVel, 0 }, newMass, { newAcc, 0 }));
+        env.addPoint(Point({ 400, i * 8}, { -newVel, 0 }, newMass, { -newAcc, 0 }));
+        env.addPoint(Point({ 450, i * 8}, { -newVel, 0 }, newMass, { -newAcc, 0 }));
+        env.addPoint(Point({ 500, i * 8}, { -newVel, 0 }, newMass, { -newAcc, 0 }));
+    }
+
     while (true)
     {
-        if (frame > 3500)
-        {
-            env.reset();
-            env.addPoint(Point({ dist(gen), dist(gen) }, {0.003, 0.00}, {0, 0}, std::pow(10, 6)));
-            env.addPoint(Point({ dist(gen), dist(gen) }, { 0.00, 0.00 }, { 0, 0 }, std::pow(10, 8)));
-            env.addPoint(Point({ dist(gen), dist(gen) }, { 0.002, -0.001 }, { 0, 0 }, std::pow(10, 7)));
-            env.addPoint(Point({ dist(gen), dist(gen) }, { 0.002, -0.002 }, { 0, 0 }, std::pow(10, 4)));
-            frame = 0;
-        }
+
         env.upatePoints();
         communicator.sendMsg(communicator.getEnviromentJson(env));
         communicator.recieveMsg();

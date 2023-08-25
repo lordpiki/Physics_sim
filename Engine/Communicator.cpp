@@ -39,6 +39,7 @@ Communicator::~Communicator()
 
 void Communicator::sendMsg(const string& message) 
 {
+	cout << message.length() << endl;
     send(clientSocket, message.c_str(), message.length(), 0);
 }
 

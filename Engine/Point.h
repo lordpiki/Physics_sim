@@ -15,18 +15,18 @@ using std::vector;
 class Point {
 public:
     // Constructor with default values
-    Point(pair<double, double> position = std::make_pair(0, 0), pair<double, double> velocity = std::make_pair(0, 0), pair<double, double> acceleration = std::make_pair(0, 0), double mass = std::pow(10, 6), double timeFrame = 50);
+    Point(pair<double, double> position = std::make_pair(0, 0), pair<double, double> velocity = std::make_pair(0, 0), double mass = std::pow(10, 6), pair<double, double> acceleration = std::make_pair(0, 0), double timeFrame = 1);
         
 
     // Getter and setter for position 
     pair<double, double> getPosition() const;
     void setPosition(double newX, double newY);
 
-    pair<double, double> getvelocity() const;
+    pair<double, double> getVelocity() const;
     void setVelocity(pair<double, double> newvelocity);
 
     pair<double, double> getAcceleration() const;
-    void setAcceleration(pair<double, double> newAcceleration);
+    void setAcceleration(pair<double, double> newAccceleration);
 
     double getMass() const;
     void setMass(double newMass);
@@ -46,6 +46,7 @@ public:
     double getTotalAcceleration() const;
     double getDirection() const;
     int getRadius() const;
+    void setRadius(int radius);
 
 
 private:

@@ -18,7 +18,7 @@ class Communicator:
             
     def recv_message(self):
         if self.client_socket is not None:
-            return self.client_socket.recv(1024)
+            return self.client_socket.recv(50000)
 
     def close(self):
         if self.client_socket is not None:
