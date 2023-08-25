@@ -14,6 +14,11 @@ void Enviroment::addPoint(const Point& point)
     points.push_back(point);
 }
 
+void Enviroment::reset()
+{
+    points.clear();
+}
+
 vector<Point> Enviroment::getPoints() const
 {
     return points;
@@ -39,8 +44,17 @@ void Enviroment::checkColision()
     {
         if (points[i].getDistance(points[i + 1]) < 2)
         {
+            updateColision(points[i], points[1]);
             points[i].setMass(points[i].getMass() + points[i + 1].getMass());
             points.erase(points.begin() + i);
         }
     }
+}
+
+void Enviroment::updateColision(Point& point1, Point& point2)
+{
+    double pInitial = point1.getMomentum() + point2.getMomentum();
+    double pFinal = pInitial;
+
+
 }

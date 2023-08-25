@@ -15,7 +15,7 @@ using std::vector;
 class Point {
 public:
     // Constructor with default values
-    Point(pair<double, double> position = std::make_pair(0, 0), pair<double, double> velocity = std::make_pair(0, 0), pair<double, double> acceleration = std::make_pair(0, 0), double mass = std::pow(10, 6), double timeFrame = 50);
+    Point(pair<double, double> position = std::make_pair(0, 0), pair<double, double> velocity = std::make_pair(0, 0), pair<double, double> acceleration = std::make_pair(0, 0), double mass = std::pow(10, 6), double timeFrame = 50, int radius = 1);
         
 
     // Getter and setter for position 
@@ -38,9 +38,14 @@ public:
     pair<double, double> updateVelocity();
     void updatePosition(const vector<Point>& allPoints);
 
-    double getDistance(const Point& otherPoint);
+    double getDistance(const Point& otherPoint) const;
+    double getMomentum() const;
 
 
+    double getTotalVelocity() const;
+    double getTotalAcceleration() const;
+    double getDirection() const;
+    int getRadius() const;
 
 
 private:
@@ -48,6 +53,8 @@ private:
     pair<double, double> position; // X and Y values represented as a pair
     pair<double, double> velocity;       // velocity of the point
     pair<double, double> acceleration; // Acceleration of the point
+    double direction;
+    int radius;
     double mass;        // Mass of the point
     double timeFrame;
 
@@ -57,6 +64,7 @@ private:
     // function to calculate gravitational net force for all points (x,y directions)
     // returns x, y
     pair<double, double> calcNetForce(const vector<Point>& allPoints);
+
 
 
 };

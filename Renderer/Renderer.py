@@ -17,7 +17,7 @@ class Renderer:
         print(points)
         for point in points:
             x, y = map(int, point)  # Convert the coordinates to integers
-            pygame.draw.circle(self.screen, "white", point, 3)
+            pygame.draw.circle(self.screen, "white", point, 2)
             
         
         pygame.display.update()

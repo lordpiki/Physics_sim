@@ -1,8 +1,8 @@
 #include "Point.h"
 #include <cmath>
 
-Point::Point(pair<double, double> position, pair<double, double> velocity, pair<double, double> acceleration, double mass, double timeFrame)
-    : position(position), velocity(velocity), acceleration(acceleration), mass(mass), timeFrame(timeFrame) {}
+Point::Point(pair<double, double> position, pair<double, double> velocity, pair<double, double> acceleration, double mass, double timeFrame, int radius)
+    : position(position), velocity(velocity), acceleration(acceleration), mass(mass), timeFrame(timeFrame), radius(radius) {}
 
 pair<double, double> Point::getPosition() const
 {
@@ -81,16 +81,42 @@ pair<double, double> Point::updateVelocity()
 void Point::updatePosition(const vector<Point>& allPoints)
 {
     // getting direction (angle)
-    double direction = std::atan2(calcNetForce(allPoints).second, calcNetForce(allPoints).first);
+    direction = std::atan2(velocity.second, velocity.first);
 
     // moving pos
     position.first += velocity.first * timeFrame;
     position.second += velocity.second * timeFrame;
 }
 
-double Point::getDistance(const Point& otherPoint)
+double Point::getDistance(const Point& otherPoint) const
 {
-    return std::hypot(otherPoint.position.first - position.first, otherPoint.position.second - position.second);;
+    return std::hypot(otherPoint.position.first - position.first, otherPoint.position.second - position.second);
+}
+
+double Point::getMomentum() const
+{
+    return mass * getTotalVelocity();
+}
+
+double Point::getTotalVelocity() const
+{
+    return std::sqrt(std::pow(velocity.first, 2) + std::pow(velocity.second, 2));
+
+}
+
+double Point::getTotalAcceleration() const
+{
+    return std::sqrt(std::pow(acceleration.first, 2) + std::pow(acceleration.second, 2));
+}
+
+double Point::getDirection() const
+{
+    return direction;
+}
+
+int Point::getRadius() const
+{
+    return radius;
 }
 
 pair<double, double> Point::calcNetForce(const vector<Point>& allPoints)

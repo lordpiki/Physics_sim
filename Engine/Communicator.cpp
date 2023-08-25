@@ -58,7 +58,12 @@ string Communicator::getEnviromentJson(const Enviroment& enviroment)
 	json jsonPoints;
 	for (const Point& point : enviroment.getPoints())
 	{
-		jsonPoints.push_back({ {"x", point.getPosition().first}, {"y", point.getPosition().second} });
+		jsonPoints.push_back({ {"x", point.getPosition().first},
+			{"y", point.getPosition().second},
+			{"velocity", point.getTotalVelocity()},
+			{"acceleration", point.getTotalAcceleration()},
+			{"mass", point.getMass()},
+			{"radius", point.getRadius()}});
 	}
 	return jsonPoints.dump();
 }
