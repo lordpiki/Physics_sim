@@ -4,7 +4,7 @@ class Renderer:
     
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((1280, 720))
+        self.screen = pygame.display.set_mode((1820, 980))
         self.screen.fill("blue")
         self.clock = pygame.time.Clock()
         self.running = True
@@ -13,11 +13,11 @@ class Renderer:
     
     def updateScreen(self, points):
         
-        # self.screen.fill("black")
+        self.screen.fill("black")
         print(points)
         for point in points:
             x, y = map(int, point)  # Convert the coordinates to integers
-            pygame.draw.circle(self.screen, "white", point, 1)
+            pygame.draw.circle(self.screen, "white", point, 3)
             
         
         pygame.display.update()

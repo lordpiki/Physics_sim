@@ -40,7 +40,6 @@ Communicator::~Communicator()
 void Communicator::sendMsg(const string& message) 
 {
     send(clientSocket, message.c_str(), message.length(), 0);
-	cout << "Sent msg: " << message << endl;
 }
 
 string Communicator::recieveMsg()

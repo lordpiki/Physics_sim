@@ -1,6 +1,9 @@
 #include "Point.h"
 #include <cmath>
 
+Point::Point(pair<double, double> position, pair<double, double> velocity, pair<double, double> acceleration, double mass, double timeFrame)
+    : position(position), velocity(velocity), acceleration(acceleration), mass(mass), timeFrame(timeFrame) {}
+
 pair<double, double> Point::getPosition() const
 {
     return position;
@@ -11,22 +14,22 @@ void Point::setPosition(double newX, double newY)
     position = std::make_pair(newX, newY);
 }
 
-double Point::getvelocity() const
+pair<double, double> Point::getvelocity() const
 {
     return velocity;
 }
 
-void Point::setvelocity(double newvelocity)
+void Point::setVelocity(pair<double, double> newvelocity)
 {
     velocity = newvelocity;
 }
 
-double Point::getAcceleration() const
+pair<double, double> Point::getAcceleration() const
 {
     return acceleration;
 }
 
-void Point::setAcceleration(double newAcceleration)
+void Point::setAcceleration(pair<double, double> newAcceleration)
 {
     acceleration = newAcceleration;
 }
@@ -53,21 +56,25 @@ void Point::updatePoint(const vector<Point>& allPoints)
     updatePosition(allPoints);
 }
 
-double Point::updateAcceleration(const vector<Point>& allPoints)
+pair<double, double> Point::updateAcceleration(const vector<Point>& allPoints)
 {
     // calculating acceleration by 
-    acceleration = std::sqrt(std::pow(calcNetForce(allPoints).first, 2) + std::pow(calcNetForce(allPoints).second, 2)) / mass;
+    acceleration.first = calcNetForce(allPoints).first / mass;
+    acceleration.second = calcNetForce(allPoints).second / mass;
     return acceleration;
 }
 
-double Point::updateVelocity()
+pair<double, double> Point::updateVelocity()
 {
     // adding acceleration to velocity
-    velocity = velocity + acceleration * timeFrame;
-    if (velocity > 1000)
-    {
-        velocity = 1000;
-    }
+    velocity.first = velocity.first + acceleration.first * timeFrame;
+    velocity.second = velocity.second + acceleration.second * timeFrame;
+    
+    // setting the max velocity to 1000 m/s
+    if (velocity.first > 1000) { velocity.first = 1000; }
+    if (velocity.second > 1000) {velocity.second = 1000; }
+
+
     return velocity;
 }
 
@@ -77,8 +84,8 @@ void Point::updatePosition(const vector<Point>& allPoints)
     double direction = std::atan2(calcNetForce(allPoints).second, calcNetForce(allPoints).first);
 
     // moving pos
-    position.first += velocity * timeFrame * std::cos(direction);
-    position.second += velocity * timeFrame * std::sin(direction);
+    position.first += velocity.first * timeFrame;
+    position.second += velocity.second * timeFrame;
 }
 
 double Point::getDistance(const Point& otherPoint)

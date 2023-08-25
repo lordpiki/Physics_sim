@@ -15,18 +15,18 @@ using std::vector;
 class Point {
 public:
     // Constructor with default values
-    Point(double x = 0.0, double y = 0.0, double velocity = 0.0, double acceleration = 0.0, double mass = std::pow(10, 6), double timeFrame = 50)
-        : position(std::make_pair(x, y)), velocity(velocity), acceleration(acceleration), mass(mass), timeFrame(timeFrame) {}
+    Point(pair<double, double> position = std::make_pair(0, 0), pair<double, double> velocity = std::make_pair(0, 0), pair<double, double> acceleration = std::make_pair(0, 0), double mass = std::pow(10, 6), double timeFrame = 50);
+        
 
     // Getter and setter for position 
     pair<double, double> getPosition() const;
     void setPosition(double newX, double newY);
 
-    double getvelocity() const;
-    void setvelocity(double newvelocity);
+    pair<double, double> getvelocity() const;
+    void setVelocity(pair<double, double> newvelocity);
 
-    double getAcceleration() const;
-    void setAcceleration(double newAcceleration);
+    pair<double, double> getAcceleration() const;
+    void setAcceleration(pair<double, double> newAcceleration);
 
     double getMass() const;
     void setMass(double newMass);
@@ -34,8 +34,8 @@ public:
 
     void updatePoint(const vector<Point>& allPoints);
     
-    double updateAcceleration(const vector<Point>& allPoints);
-    double updateVelocity();
+    pair<double, double> updateAcceleration(const vector<Point>& allPoints);
+    pair<double, double> updateVelocity();
     void updatePosition(const vector<Point>& allPoints);
 
     double getDistance(const Point& otherPoint);
@@ -46,8 +46,8 @@ public:
 private:
 
     pair<double, double> position; // X and Y values represented as a pair
-    double velocity;       // velocity of the point
-    double acceleration; // Acceleration of the point
+    pair<double, double> velocity;       // velocity of the point
+    pair<double, double> acceleration; // Acceleration of the point
     double mass;        // Mass of the point
     double timeFrame;
 
