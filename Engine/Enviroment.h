@@ -17,6 +17,8 @@ public:
 	void upatePoints();
 
 	void checkColision();
+
+	void updateTimeFrame(bool toUp);
 	
 
 private:

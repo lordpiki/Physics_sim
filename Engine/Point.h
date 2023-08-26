@@ -15,7 +15,7 @@ using std::vector;
 class Point {
 public:
     // Constructor with default values
-    Point(pair<double, double> position = std::make_pair(0, 0), pair<double, double> velocity = std::make_pair(0, 0), double mass = std::pow(10, 6), pair<double, double> acceleration = std::make_pair(0, 0), double timeFrame = 1);
+    Point(pair<double, double> position = std::make_pair(0, 0), pair<double, double> velocity = std::make_pair(0, 0), double mass = std::pow(10, 6), pair<double, double> acceleration = std::make_pair(0, 0), double timeFrame = 50);
         
 
     // Getter and setter for position 
@@ -31,6 +31,8 @@ public:
     double getMass() const;
     void setMass(double newMass);
     
+    double getTimeFrame();
+    void setTimeFrame(double newTimeFrame);
 
     void updatePoint(const vector<Point>& allPoints);
     

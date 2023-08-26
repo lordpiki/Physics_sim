@@ -16,13 +16,31 @@ if __name__ == "__main__":
     while True:
         jsonMsg = communicator.recv_message().decode() 
         renderer.updateScreen(communicator.convertJsonToList(jsonMsg))
-        communicator.send_message("d")
+            
+        left, middle, right = pygame.mouse.get_pressed()
+        if left:
+            print("+")
+            communicator.send_message('+')
+        elif right:
+            print("-")
+            communicator.send_message('-')
+        else:    
+            communicator.send_message('d')
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                communicator.send_message('exit')
                 communicator.close()
+                
                 pygame.quit()
+                
                 exit()
+                
+                
+            
+        
+            
+            
 
         
         

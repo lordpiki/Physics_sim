@@ -44,6 +44,16 @@ void Point::setMass(double newMass)
     mass = newMass;
 }
 
+double Point::getTimeFrame()
+{
+    return timeFrame;
+}
+
+void Point::setTimeFrame(double newTimeFrame)
+{
+    timeFrame = newTimeFrame;
+}
+
 void Point::updatePoint(const vector<Point>& allPoints)
 {
     // updating acceleration

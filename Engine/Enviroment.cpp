@@ -32,7 +32,7 @@ void Enviroment::upatePoints()
 {
     for (Point& point : points)
     {
-        point.setRadius(3);
+        point.setRadius(2);
         point.updatePoint(points);
         //cout << "pos: [" << point.getPosition().first << ", " << point.getPosition().second << 
           //  "] acc: [" << point.getAcceleration().first << ", " << point.getAcceleration().second << "]"
@@ -47,12 +47,21 @@ void Enviroment::checkColision()
 {
     for (int i = 0; i < points.size() - 1; i++)
     {
-        if (points[i].getDistance(points[i + 1]) < 4 * ( points[i].getRadius() + points[i + 1].getRadius()))
+        if (points[i].getDistance(points[i + 1]) < ( points[i].getRadius() + points[i + 1].getRadius()))
         {
-            updateColision(points[i], points[1]);
+            //updateColision(points[i], points[1]);
             cout << "Collision" << endl;
         }
     }
+}
+
+void Enviroment::updateTimeFrame(bool toUp)
+{
+    for (Point& point : points)
+    {
+        point.setTimeFrame(point.getTimeFrame() + 2 * (toUp ? 1 : -1));
+    }
+    cout << "Updated time Frame: " << points[0].getTimeFrame() << endl;
 }
 
 void Enviroment::updateColision(Point& point1, Point& point2)

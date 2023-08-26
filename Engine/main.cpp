@@ -22,28 +22,32 @@ int main()
     Enviroment env;
 
     Communicator communicator(PORT);
-    double mass = std::pow(10, 8);
+    double mass = std::pow(10, 6);
 
     cout << communicator.getEnviromentJson(env);
-    for (double i = 1; i < 50; i++)
-    {
-        double newMass = mass * i;
-        double newAcc = 0;
-        double newVel = 0.01;
-        env.addPoint(Point({ 0, i * 8 }, { newVel , 0 }, newMass, { newAcc, 0 }));
-        env.addPoint(Point({ 50, i * 8}, { newVel, 0 }, newMass, { newAcc, 0 }));
-        env.addPoint(Point({ 100, i * 8}, { newVel, 0 }, newMass, { newAcc, 0 }));
-        env.addPoint(Point({ 400, i * 8}, { -newVel, 0 }, newMass, { -newAcc, 0 }));
-        env.addPoint(Point({ 450, i * 8}, { -newVel, 0 }, newMass, { -newAcc, 0 }));
-        env.addPoint(Point({ 500, i * 8}, { -newVel, 0 }, newMass, { -newAcc, 0 }));
-    }
+    env.addPoint(Point({ 550, 100 }, { -0.0, 0 }, std::pow(10, 6)));
+    env.addPoint(Point({ 350, 200 }, { 0.005, 0.0 }, std::pow(10, 8)));
+    env.addPoint(Point({ 450, 350 }, { 0, -0.00 }, std::pow(10, 7)));
+    env.addPoint(Point({ 650, 75 }, { 0, -0.00 }, std::pow(10, 6)));
 
     while (true)
     {
 
         env.upatePoints();
         communicator.sendMsg(communicator.getEnviromentJson(env));
-        communicator.recieveMsg();
+        string msg = communicator.recieveMsg();
+        if (msg == "+")
+        {
+            env.updateTimeFrame(true);
+        }
+        if (msg == "-")
+        {
+            env.updateTimeFrame(false);
+        }
+        if (msg == "exit")
+        {
+            exit(1);
+        }
         frame++;
     }
 

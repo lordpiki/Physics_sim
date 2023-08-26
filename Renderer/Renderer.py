@@ -17,7 +17,9 @@ class Renderer:
         print(points)
         for point in points:
             pygame.draw.circle(self.screen, "white", (point.x, point.y), point.radius)
-            
+        
+        
+        
         
         pygame.display.update()
 
