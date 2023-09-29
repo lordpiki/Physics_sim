@@ -7,7 +7,10 @@
 
 
 
-#define G 6.67430e-11
+//#define G 6.67430e-11
+#define G 1
+#define M_PI           3.14159265358979323846  /* pi */
+
 
 using std::pair;
 using std::vector;
@@ -46,9 +49,17 @@ public:
 
     double getTotalVelocity() const;
     double getTotalAcceleration() const;
-    double getDirection() const;
+    int getDirection() const;
     int getRadius() const;
     void setRadius(int radius);
+
+    double checkAngle(const Point& other);
+    void moveByAngle(double distance, double angle);
+
+    void setInvisable();
+    bool isPointInvisable() const;
+
+    void downgradeVelocity();
 
 
 private:
@@ -56,10 +67,14 @@ private:
     pair<double, double> position; // X and Y values represented as a pair
     pair<double, double> velocity;       // velocity of the point
     pair<double, double> acceleration; // Acceleration of the point
-    double direction;
+    int direction;
     int radius;
     double mass;        // Mass of the point
+    
+    
     double timeFrame;
+
+    bool isInvisable;
 
     // function to calculate gravitational force to another single point
     double calcGravitationalForce(const Point& otherPoint) const;

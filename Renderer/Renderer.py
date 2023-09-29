@@ -1,4 +1,5 @@
 import pygame
+import math
 
 class Renderer:
     
@@ -9,14 +10,14 @@ class Renderer:
         self.clock = pygame.time.Clock()
         self.running = True
         self.dt = 0
-        print("ahhh")
     
     def updateScreen(self, points):
         
         self.screen.fill("black")
-        print(points)
         for point in points:
             pygame.draw.circle(self.screen, "white", (point.x, point.y), point.radius)
+            endPos = (round(point.x + point.velocity * math.cos(point.direction)), round(point.y + point.velocity * math.sin(point.direction)))
+            pygame.draw.line(self.screen, "red", (point.x, point.y), endPos, 1)
         
         
         

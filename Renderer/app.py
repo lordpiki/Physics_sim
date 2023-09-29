@@ -35,15 +35,4 @@ if __name__ == "__main__":
                 pygame.quit()
                 
                 exit()
-                
-                
-            
-        
-            
-            
-
-        
-        
-
-
     communicator.close()

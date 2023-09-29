@@ -20,6 +20,8 @@ public:
 
 	void updateTimeFrame(bool toUp);
 	
+	bool checkAndMovePoints(Point& point1, Point& point2);
+	
 
 private:
 	vector<Point> points;

@@ -25,10 +25,20 @@ int main()
     double mass = std::pow(10, 6);
 
     cout << communicator.getEnviromentJson(env);
-    env.addPoint(Point({ 550, 100 }, { -0.0, 0 }, std::pow(10, 6)));
-    env.addPoint(Point({ 350, 200 }, { 0.005, 0.0 }, std::pow(10, 8)));
-    env.addPoint(Point({ 450, 350 }, { 0, -0.00 }, std::pow(10, 7)));
-    env.addPoint(Point({ 650, 75 }, { 0, -0.00 }, std::pow(10, 6)));
+    Point inv({ 1300, 300}, { -0.0, 0 }, std::pow(2, 3));
+    inv.setInvisable();
+    env.addPoint(inv);
+
+    for (int i = 0; i < 50; i++)
+    {
+        env.addPoint(Point({ 500, 100 + i * 8}, { 0.0, 0 }, std::pow(2, -9)));
+        env.addPoint(Point({ 450, 100 + i * 8}, { 0.0, 0 }, std::pow(2, -9)));
+        env.addPoint(Point({ 350, 100 + i * 8}, { 0.0, 0 }, std::pow(2, -9)));
+                                            
+        env.addPoint(Point({ 550, 100 + i * 8}, { -0.0, 0 }, std::pow(2, -9)));
+        env.addPoint(Point({ 600, 100 + i * 8}, { -0.0, 0 }, std::pow(2, -9)));
+        env.addPoint(Point({ 700, 100 + i * 8}, { -0.0, 0 }, std::pow(2, -9)));
+    }
 
     while (true)
     {

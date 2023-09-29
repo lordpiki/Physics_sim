@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="4504870d-b355-4514-83bb-e8d18685be64" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Engine/Communicator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/Communicator.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/Enviroment.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/Enviroment.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/Point.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/Point.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/Point.h" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/Point.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Renderer/Communicator.py" beforeDir="false" afterPath="$PROJECT_DIR$/Renderer/Communicator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Renderer/Point.py" beforeDir="false" afterPath="$PROJECT_DIR$/Renderer/Point.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Renderer/Renderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Renderer/Renderer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Renderer/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/Renderer/app.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 0
+}]]></component>
+  <component name="ProjectId" id="2VRoZ31kyggs15FiTx1c7g3GEvV" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/mikid/Documents/Work/Personal/TaskManagerSite",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4504870d-b355-4514-83bb-e8d18685be64" name="Changes" comment="" />
+      <created>1694808306995</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1694808306995</updated>
+      <workItem from="1694808310998" duration="21000" />
+    </task>
+    <servers />
+  </component>
+</project>

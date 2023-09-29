@@ -26,6 +26,6 @@ class Communicator:
     
     def convertJsonToList(self, jsonStr):
         points = json.loads(jsonStr)
-        list_of_points = [Point(point['x'], point['y'], point['velocity'], point['acceleration'], point['mass'], point['radius']) for point in points]
+        list_of_points = [Point(point['x'], point['y'], point['velocity'], point['acceleration'], point['mass'], point['radius'], point['direction']) for point in points]
         return list_of_points        
 

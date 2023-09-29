@@ -2,7 +2,7 @@
 #include <cmath>
 
 Point::Point(pair<double, double> position, pair<double, double> velocity, double mass, pair<double, double> acceleration, double timeFrame)
-    : position(position), velocity(velocity), acceleration(acceleration), mass(mass), timeFrame(timeFrame), radius(std::log10(mass)) {}
+    : position(position), velocity(velocity), acceleration(acceleration), mass(mass), timeFrame(timeFrame), radius(std::log(mass) / std::log(0.09)), isInvisable(false) {}
 
 pair<double, double> Point::getPosition() const
 {
@@ -56,14 +56,21 @@ void Point::setTimeFrame(double newTimeFrame)
 
 void Point::updatePoint(const vector<Point>& allPoints)
 {
-    // updating acceleration
+     // updating acceleration
     updateAcceleration(allPoints);
 
     // updating velocity
     updateVelocity();
 
-    // updating point position
-    updatePosition(allPoints);
+
+    if (!isInvisable)
+    {
+       
+
+        // updating point position
+        updatePosition(allPoints);
+    }
+    
 }
 
 pair<double, double> Point::updateAcceleration(const vector<Point>& allPoints)
@@ -100,7 +107,7 @@ void Point::updatePosition(const vector<Point>& allPoints)
 
 double Point::getDistance(const Point& otherPoint) const
 {
-    return std::hypot(otherPoint.position.first - position.first, otherPoint.position.second - position.second);
+    return std::sqrt(std::pow(otherPoint.position.first - position.first, 2) + pow(otherPoint.position.second - position.second, 2));
 }
 
 double Point::getMomentum() const
@@ -119,7 +126,7 @@ double Point::getTotalAcceleration() const
     return std::sqrt(std::pow(acceleration.first, 2) + std::pow(acceleration.second, 2));
 }
 
-double Point::getDirection() const
+int Point::getDirection() const
 {
     return direction;
 }
@@ -133,6 +140,39 @@ void Point::setRadius(int newRadius)
 {
     radius = newRadius;
 }
+
+double Point::checkAngle(const Point& other)
+{
+    double dx = this->position.first - other.position.first;
+    double dy = this->position.second - other.position.second;
+
+    double angle = atan2(dy, dx) * 180.0 / M_PI;
+
+    return angle;
+}
+
+void Point::moveByAngle(double distance, double angle)
+{
+    this->position.first += distance * cos(angle);
+    this->position.second += distance * sin(angle);
+}
+
+void Point::setInvisable()
+{
+    isInvisable = true;
+}
+
+bool Point::isPointInvisable() const
+{
+    return isInvisable;
+}
+
+void Point::downgradeVelocity()
+{
+    velocity.first *= 0.8;
+    velocity.second *= 0.8;
+}
+
 
 pair<double, double> Point::calcNetForce(const vector<Point>& allPoints)
 {
@@ -168,6 +208,10 @@ double Point::calcGravitationalForce(const Point& otherPoint) const
     // calculate distance between 2 points
     double distance = std::hypot(otherPoint.position.first - position.first, otherPoint.position.second - position.second);
     // Calculate the gravitational force using the gravity formula
+    if (distance < 100)
+    {
+        distance = 100;
+    }
     double force = (G * mass * otherPoint.mass) / (distance * distance);
 
     return force;
