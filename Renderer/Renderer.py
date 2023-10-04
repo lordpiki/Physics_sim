@@ -5,6 +5,7 @@ class Renderer:
     
     def __init__(self):
         pygame.init()
+        
         self.screen = pygame.display.set_mode((1820, 980))
         self.screen.fill("blue")
         self.clock = pygame.time.Clock()
@@ -12,12 +13,15 @@ class Renderer:
         self.dt = 0
     
     def updateScreen(self, points):
-        
+        font = pygame.font.SysFont('Arial', 12, bold=True)    
+
         self.screen.fill("black")
         for point in points:
-            pygame.draw.circle(self.screen, "white", (point.x, point.y), point.radius)
+            pygame.draw.circle(self.screen, point.color, (point.x, point.y), point.radius * 0.9)
             endPos = (round(point.x + point.velocity * math.cos(point.direction)), round(point.y + point.velocity * math.sin(point.direction)))
-            pygame.draw.line(self.screen, "red", (point.x, point.y), endPos, 1)
+            #pygame.draw.line(self.screen, "red", (point.x, point.y), endPos, 1)
+            text = font.render(f"V = {round(point.velocity, 2)}m/s", True, (255, 255, 255))
+            #self.screen.blit(text, (point.x, point.y - 30))
         
         
         

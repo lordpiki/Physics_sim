@@ -1,8 +1,8 @@
 #include "Point.h"
 #include <cmath>
 
-Point::Point(pair<double, double> position, pair<double, double> velocity, double mass, pair<double, double> acceleration, double timeFrame)
-    : position(position), velocity(velocity), acceleration(acceleration), mass(mass), timeFrame(timeFrame), radius(std::log(mass) / std::log(0.09)), isInvisable(false) {}
+Point::Point(pair<double, double> position, pair<double, double> velocity, double mass, string color, pair<double, double> acceleration, double timeFrame)
+    : position(position), velocity(velocity), acceleration(acceleration), mass(mass), timeFrame(timeFrame), radius(std::log(mass) / std::log(0.09)), isInvisable(false), color(color) {}
 
 pair<double, double> Point::getPosition() const
 {
@@ -98,7 +98,7 @@ pair<double, double> Point::updateVelocity()
 void Point::updatePosition(const vector<Point>& allPoints)
 {
     // getting direction (angle)
-    direction = std::atan2(velocity.second, velocity.first);
+    direction = 1 / std::atan2(velocity.first, velocity.second);
 
     // moving pos
     position.first += velocity.first * timeFrame;
@@ -143,8 +143,8 @@ void Point::setRadius(int newRadius)
 
 double Point::checkAngle(const Point& other)
 {
-    double dx = this->position.first - other.position.first;
-    double dy = this->position.second - other.position.second;
+    double dx = other.position.first - this->position.first;
+    double dy = other.position.second - this->position.second;
 
     double angle = atan2(dy, dx) * 180.0 / M_PI;
 
@@ -153,8 +153,8 @@ double Point::checkAngle(const Point& other)
 
 void Point::moveByAngle(double distance, double angle)
 {
-    this->position.first += distance * cos(angle);
-    this->position.second += distance * sin(angle);
+    this->position.first += distance * cos(angle * (M_PI / 180));
+    this->position.second += distance * sin(angle * (M_PI / 180));
 }
 
 void Point::setInvisable()
@@ -169,8 +169,18 @@ bool Point::isPointInvisable() const
 
 void Point::downgradeVelocity()
 {
-    velocity.first *= 0.8;
-    velocity.second *= 0.8;
+    velocity.first *= 0.999;
+    velocity.second *= 0.999;
+}
+
+void Point::setColor(const string& color)
+{
+    this->color = color;
+}
+
+string Point::getColor() const
+{
+    return color;
 }
 
 

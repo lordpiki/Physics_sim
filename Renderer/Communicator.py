@@ -18,7 +18,7 @@ class Communicator:
             
     def recv_message(self):
         if self.client_socket is not None:
-            return self.client_socket.recv(50000)
+            return self.client_socket.recv(5000000)
 
     def close(self):
         if self.client_socket is not None:
@@ -26,6 +26,6 @@ class Communicator:
     
     def convertJsonToList(self, jsonStr):
         points = json.loads(jsonStr)
-        list_of_points = [Point(point['x'], point['y'], point['velocity'], point['acceleration'], point['mass'], point['radius'], point['direction']) for point in points]
+        list_of_points = [Point(point['x'], point['y'], point['velocity'], point['acceleration'], point['mass'], point['radius'], point['direction'], point['color']) for point in points]
         return list_of_points        
 

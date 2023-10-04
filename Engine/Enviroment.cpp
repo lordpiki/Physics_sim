@@ -1,16 +1,14 @@
 #include "Enviroment.h"
 #include <iostream>
-
-#define M_PI           3.14159265358979323846  /* pi */
-
-
+#include <cmath> // for M_PI
 
 using std::cout;
 using std::endl;
 
+const double MAX_VELOCITY = 1000.0; // Define a named constant for max velocity
+
 Enviroment::Enviroment()
 {
-
 }
 
 void Enviroment::addPoint(const Point& point)
@@ -32,55 +30,38 @@ void Enviroment::upatePoints()
 {
     for (Point& point : points)
     {
-        //point.setRadius(2);
+        point.setRadius(10);
         point.updatePoint(points);
     }
-    
+
     checkColision();
 }
 
 void Enviroment::checkColision()
 {
-    double distance = 0;
-    double angle = 0;
-    bool isCollision = false;
-
-    do
+    for (int i = 0; i < points.size(); i++)
     {
-        int collisionCount = 0;
-        isCollision = false;
-        for (int i = 0; i < points.size() - 1; i++)
+        for (int j = i + 1; j < points.size(); j++)
         {
-            distance = points[i].getDistance(points[i + 1]);
-            angle = points[i].checkAngle(points[i + 1]);
 
-            if (checkAndMovePoints(points[i], points[i + 1]))
+            if (checkAndMovePoints(points[i], points[j]))
             {
-                //isCollision = true;
-                collisionCount++;
-                //updateColision(points[i], points[i + 1]);
-                points[i].downgradeVelocity();
-                points[i+1].downgradeVelocity();
-
+                double distance = points[i].getDistance(points[j]);
+                double angle = points[i].checkAngle(points[j]);
+                cout << "collision" << endl;
+                //points[i].moveByAngle(distance / 2, 180 - angle);
+                //points[j].moveByAngle(distance / 2, angle);
             }
-            
         }
-        if (collisionCount > -1)
-        {
-
-            //cout << "collision count: " << collisionCount << endl;
-        }
-    } while (isCollision);
-    //cout << "moved frame" << endl;
+    }
 }
 
 void Enviroment::updateTimeFrame(bool toUp)
 {
     for (Point& point : points)
     {
-        point.setTimeFrame(point.getTimeFrame() + 2 * (toUp ? 1 : -1));
+        point.setTimeFrame((toUp ? 1 : 0));
     }
-    cout << "Updated time Frame: " << points[0].getTimeFrame() << endl;
 }
 
 bool Enviroment::checkAndMovePoints(Point& point1, Point& point2)
@@ -91,58 +72,46 @@ bool Enviroment::checkAndMovePoints(Point& point1, Point& point2)
     // Calculate the actual distance between the points
     double distance = point1.getDistance(point2);
 
-    if (distance < minDistance) {
-        // Calculate the unit vector between the points
-        //double dx = point2.getPosition().first - point1.getPosition().first;
-        //double dy = point2.getPosition().second - point1.getPosition().second;
-        //double length = std::sqrt(dx * dx + dy * dy);
+    if (distance < minDistance)
+    {
 
-        //// Calculate the movement distance for each point
-        //double moveDistance = (minDistance - distance) / 2.0;
+        // Calculate the relative velocity between the two points.
+        double relativeVelocityX = point1.getVelocity().first - point2.getVelocity().first;
+        double relativeVelocityY = point1.getVelocity().second - point2.getVelocity().second;
 
-        //// Calculate the movement components
-        //double moveX1 = (moveDistance / length) * dx;
-        //double moveY1 = (moveDistance / length) * dy;
-        //double moveX2 = -moveX1; // Move in opposite directions
-        //double moveY2 = -moveY1;
+        // Calculate the impact vector.
+        double impactVectorX = point1.getPosition().first - point2.getPosition().first;
+        double impactVectorY = point1.getPosition().second - point2.getPosition().second;
 
-        //// Update the positions of the points
-        //point1.setPosition(point1.getPosition().first + moveX1, point1.getPosition().second + moveY1);
-        //point2.setPosition(point2.getPosition().first + moveX2, point2.getPosition().second + moveY2);
+        // Calculate the dot product of relative velocity and impact vector.
+        double dotProduct = relativeVelocityX * impactVectorX + relativeVelocityY * impactVectorY;
+
+        // Calculate the magnitude of the impact vector squared.
+        double impactVectorMagnitudeSquared = impactVectorX * impactVectorX + impactVectorY * impactVectorY;
+
+        // Calculate the normal force between the two points.
+        double normalForce = dotProduct / impactVectorMagnitudeSquared;
+
+        // Calculate the tangential force between the two points.
+        double tangentialForceX = relativeVelocityX - normalForce * impactVectorX;
+        double tangentialForceY = relativeVelocityY - normalForce * impactVectorY;
+
+        // Update the velocity of each point using the normal and tangential forces.
+        point1.setVelocity({ point1.getVelocity().first - normalForce * impactVectorX, point1.getVelocity().second - normalForce * impactVectorY });
+        point2.setVelocity({ point2.getVelocity().first + normalForce * impactVectorX, point2.getVelocity().second + normalForce * impactVectorY });
+
+        // Update the velocity of each point using the tangential force.
+        point1.setVelocity({ point1.getVelocity().first - tangentialForceX, point1.getVelocity().second - tangentialForceY });
+        point2.setVelocity({ point2.getVelocity().first + tangentialForceX, point2.getVelocity().second + tangentialForceY });
+
+        // Clamp the velocity of each point to the maximum velocity threshold.
+        point1.setVelocity({ std::min(point1.getVelocity().first, MAX_VELOCITY), std::min(point1.getVelocity().second, MAX_VELOCITY) });
+        point2.setVelocity({ std::min(point2.getVelocity().first, MAX_VELOCITY), std::min(point2.getVelocity().second, MAX_VELOCITY) });
+
+        point1.downgradeVelocity();
+        point2.downgradeVelocity();
+
         return true;
     }
     return false;
 }
-
-void Enviroment::updateColision(Point& point1, Point& point2)
-{
-    // Calculate the initial total momentum
-    double pInitial = point1.getMomentum() + point2.getMomentum();
-
-    // Calculate the final velocities using conservation of momentum
-    double velovity1Final = (pInitial - point2.getMomentum()) / point1.getMass();
-    double velovity2Final = (pInitial - point1.getMomentum()) / point2.getMass();
-
-    // Calculate angles of velocities
-    double alpha = std::atan2(point1.getVelocity().second, point1.getVelocity().first);
-    double beta = std::atan2(point2.getVelocity().second, point2.getVelocity().first);
-
-    // Calculate the new direction angles for both points
-    double theta1 = std::atan((velovity1Final  * std::sin(alpha) - point1.getVelocity().second * std::sin(beta)) /
-        (velovity1Final * std::cos(alpha) - point1.getVelocity().first * std::cos(beta)));
-
-    double theta2 = std::atan((velovity2Final * std::sin(beta) - point2.getVelocity().second * std::sin(alpha)) /
-        (velovity2Final * std::cos(beta) - point2.getVelocity().first * std::cos(alpha)));
-
-    // Convert angles to degrees
-    double degreesTheta1 = theta1 * 180.0 / M_PI;
-    double degreesTheta2 = theta2 * 180.0 / M_PI;
-
-    // Multipler for sensitivity of pushed particle
-    double multiplier = 2;
-
-    // Update the directions of the velocities
-    point1.setVelocity(std::make_pair(multiplier * velovity1Final * std::cos(theta1), multiplier * velovity1Final * std::sin(theta1)));
-    point2.setVelocity(std::make_pair(multiplier * velovity2Final * std::cos(theta2), multiplier * velovity2Final * std::sin(theta2)));
-}
-

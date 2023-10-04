@@ -65,6 +65,7 @@ string Communicator::getEnviromentJson(const Enviroment& enviroment)
 			{"acceleration", point.getTotalAcceleration()},
 			{"mass", point.getMass()},
 			{"radius", point.getRadius()},
+			{"color", point.getColor()},
 			{"direction", point.getDirection()} });
 		}
 		

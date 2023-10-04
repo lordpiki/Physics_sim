@@ -3,7 +3,7 @@ from Renderer import Renderer
 import json
 import pygame
 
-# Usage
+# Usage``
 if __name__ == "__main__":
     server_ip = "127.0.0.1"
     server_port = 8876
@@ -13,6 +13,8 @@ if __name__ == "__main__":
     communicator = Communicator(server_ip, server_port)
     communicator.connect()
 
+    
+    
     while True:
         jsonMsg = communicator.recv_message().decode() 
         renderer.updateScreen(communicator.convertJsonToList(jsonMsg))

@@ -22,37 +22,44 @@ int main()
     Enviroment env;
 
     Communicator communicator(PORT);
-    double mass = std::pow(10, 6);
 
     cout << communicator.getEnviromentJson(env);
-    Point inv({ 1300, 300}, { -0.0, 0 }, std::pow(2, 3));
+    Point inv({ 1300, 300}, { -0.0, 0 }, std::pow(2, 15));
     inv.setInvisable();
-    env.addPoint(inv);
+    inv.setColor("red");
+    //env.addPoint(inv);
 
-    for (int i = 0; i < 50; i++)
+    int distance_to_points = 40;
+    double mass = std::pow(2, 6);
+    double speedX = 1;
+    double speedY = 0;
+
+    for (int i = 0; i < 1; i++)
     {
-        env.addPoint(Point({ 500, 100 + i * 8}, { 0.0, 0 }, std::pow(2, -9)));
-        env.addPoint(Point({ 450, 100 + i * 8}, { 0.0, 0 }, std::pow(2, -9)));
-        env.addPoint(Point({ 350, 100 + i * 8}, { 0.0, 0 }, std::pow(2, -9)));
-                                            
-        env.addPoint(Point({ 550, 100 + i * 8}, { -0.0, 0 }, std::pow(2, -9)));
-        env.addPoint(Point({ 600, 100 + i * 8}, { -0.0, 0 }, std::pow(2, -9)));
-        env.addPoint(Point({ 700, 100 + i * 8}, { -0.0, 0 }, std::pow(2, -9)));
+        env.addPoint(Point({ 150, 100 + i * distance_to_points}, { speedX, speedY }, mass, "green"));
+
+        env.addPoint(Point({ 650, 100 + i * distance_to_points}, { -speedX, -speedY }, mass, "gray"));
+
     }
 
+
+
+    
+    bool canUpdate = true;
+    
     while (true)
     {
-
-        env.upatePoints();
+        if (canUpdate)
+            env.upatePoints();
         communicator.sendMsg(communicator.getEnviromentJson(env));
         string msg = communicator.recieveMsg();
         if (msg == "+")
         {
-            env.updateTimeFrame(true);
+            canUpdate = true;
         }
         if (msg == "-")
         {
-            env.updateTimeFrame(false);
+            canUpdate = false;
         }
         if (msg == "exit")
         {
